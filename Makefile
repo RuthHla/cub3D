@@ -1,37 +1,43 @@
-NAME = minimap
+NAME = cub3d
+
+SRCFILES =	get_next_line/get_next_line_utils.c \
+			get_next_line/get_next_line.c \
+			map_grid.c \
+			camera.c \
+			display.c \
+			movement.c \
+			check_move.c \
+			draw_line.c \
+			raycaster.c \
+			loop.c \
+			exit.c \
+			main.c
+
+OBJFILES = $(SRCFILES:.c=.o)
+
+CFLAGS = -Wall -Wextra -Werror -g3
+
+MLXFLAGS = -Iminilibx -Lminilibx -lmlx -lXext -lX11 -lm
+
+MLXPATH = minilibx
+
+MLXLIB = $(MLXPATH)/libmlx_Linux.a
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
 
-# SRC = minimap.c
-SRC = main.c
-OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+RM = rm -f
 
-MLX_DIR = minilibx_macos
-
-# linux = 	MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lm -lXext -lX11
-# macos =	MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
-#MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lm -lXext -lX11
-MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
+$(NAME): $(OBJFILES)
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJFILES) $(MLXLIB) $(MLXFLAGS)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	make -C $(MLX_DIR)
-	$(CC) $(CFLAGS) $(OBJ) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
-
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
 clean:
-	rm -rf $(OBJ_DIR)
-	make -C $(MLX_DIR) clean
+			$(RM) $(OBJFILES)
 
 fclean: clean
-	rm -f $(NAME)
+			$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: clean fclean all re
