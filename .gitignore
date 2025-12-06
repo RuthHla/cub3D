@@ -1,0 +1,15 @@
+# objets compilés
+*.o
+*.a
+*.out
+
+# exécutables
+minimap
+cub3D
+
+# minilibx compilée
+minilibx_macos/*.o
+minilibx_macos/*.a
+
+# fichiers macOS
+.DS_Store
