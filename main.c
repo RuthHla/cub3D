@@ -1,7 +1,4 @@
-#include "../minilibx_macos/mlx.h"
-#include <stdlib.h>
-#include <math.h>
-#include <unistd.h> // write()
+#include "cub.h"
 
 #define TILE 128      // taille des tiles
 #define mapX 8        // dimension de la map en x
@@ -396,11 +393,29 @@ void	load_texture(t_tex *tex, char *path)
 	tex->addr = mlx_get_data_addr(tex->img,
 			&tex->bpp, &tex->line_len, &tex->endian);
 }
-\
 
-
-int	main(void)
+int	main(int ac, char **av)
 {
+	if (ac != 2)
+	{
+		printf("Error\nprogram expected -> ./cub3D path/map.cub3d\n");
+		return 1;
+	}
+	if (!check_arg(av[1]))
+		return 1;
+
+	t_data *data = NULL;
+	if(!save_map(av[1], data))
+		return 1;
+
+	//init_data();
+	
+	//init_map(char **map)
+	//check_map(t_data *data)
+
+	//fichier vide + check texture
+	// if(!check_map(av[1], ))
+
 	mlx = mlx_init();
 	if (!mlx)
 		return (1);
