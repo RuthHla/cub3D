@@ -1,41 +1,39 @@
 #include "cub3d.h"
 
-void	update_direction_vectors(t_graph *graph)
+void	update_direction_vectors(t_player *player)
 {
-	graph->pdx = cos(graph->pa) * 5;
-	graph->pdy = sin(graph->pa) * 5;
-	graph->dirX = cos(graph->pa);
-	graph->dirY = sin(graph->pa);
+	player->dirX = cos(player->pa);
+	player->dirY = sin(player->pa);
 }
 
-int	look_left(t_graph *graph)
+int	look_left(t_player *player)
 {
-	if (!graph->is_looking_left)
+	if (!player->is_looking_left)
 		return (0);
-	graph->pa -= 0.01;
-	if (graph->pa < 0)
-		graph->pa += 2 * PI;
-	update_direction_vectors(graph);
+	player->pa -= player->rotation_speed;
+	if (player->pa < 0)
+		player->pa += 2 * PI;
+	update_direction_vectors(player);
 	return (1);
 }
 
-int	look_right(t_graph *graph)
+int	look_right(t_player *player)
 {
-	if (!graph->is_looking_right)
+	if (!player->is_looking_right)
 		return (0);
-	graph->pa += 0.01;
-	if (graph->pa > 2 * PI)
-		graph->pa -= 2 * PI;
-	update_direction_vectors(graph);
+	player->pa += player->rotation_speed;
+	if (player->pa > 2 * PI)
+		player->pa -= 2 * PI;
+	update_direction_vectors(player);
 	return (1);
 }
 
-int handle_rotation(t_graph *graph)
+int handle_rotation(t_player *player)
 {
 	int	moved;
 
 	moved = 0;
-	moved += look_left(graph);
-	moved += look_right(graph);
+	moved += look_left(player);
+	moved += look_right(player);
 	return (moved > 0);
 }

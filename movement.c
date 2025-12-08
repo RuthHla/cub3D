@@ -1,109 +1,109 @@
 #include "cub3d.h"
 
-int	move_forward(t_graph *graph)
+int	move_forward(t_graph *graph, t_player *player)
 {
 	double	dx;
 	double	dy;
 	int		moved;
 
-	if (!graph->is_moving_forward)
+	if (!player->is_moving_forward)
 		return (0);
-	dx = graph->dirX * graph->move_speed;
-	dy = graph->dirY * graph->move_speed;
+	dx = player->dirX * player->move_speed;
+	dy = player->dirY * player->move_speed;
 	moved = 0;
-	if (check_move_x(graph, dx))
+	if (check_move_x(graph, player, dx))
 	{
-		graph->x += dx;
+		player->px += dx;
 		moved = 1;
 	}
-	if (check_move_y(graph, dy))
+	if (check_move_y(graph, player, dy))
 	{
-		graph->y += dy;
+		player->py += dy;
 		moved = 1;
 	}
 	return (moved);
 }
 
-int	move_backward(t_graph *graph)
+int	move_backward(t_graph *graph, t_player *player)
 {
 	double	dx;
 	double	dy;
 	int		moved;
 
-	if (!graph->is_moving_backward)
+	if (!player->is_moving_backward)
 		return (0);
-	dx = -graph->dirX * graph->move_speed;
-	dy = -graph->dirY * graph->move_speed;
+	dx = -player->dirX * player->move_speed;
+	dy = -player->dirY * player->move_speed;
 	moved = 0;
-	if (check_move_x(graph, dx))
+	if (check_move_x(graph, player, dx))
 	{
-		graph->x += dx;
+		player->px += dx;
 		moved = 1;
 	}
-	if (check_move_y(graph, dy))
+	if (check_move_y(graph, player, dy))
 	{
-		graph->y += dy;
+		player->py += dy;
 		moved = 1;
 	}
 	return (moved);
 }
 
-int	move_left(t_graph *graph)
+int	move_left(t_graph *graph, t_player *player)
 {
 	double	dx;
 	double	dy;
 	int		moved;
 
-	if (!graph->is_moving_left)
+	if (!player->is_moving_left)
 		return (0);
-	dx = graph->dirY * graph->move_speed;
-	dy = -graph->dirX * graph->move_speed;
+	dx = player->dirY * player->move_speed;
+	dy = -player->dirX * player->move_speed;
 	moved = 0;
-	if (check_move_x(graph, dx))
+	if (check_move_x(graph, player, dx))
 	{
-		graph->x += dx;
+		player->px += dx;
 		moved = 1;
 	}
-	if (check_move_y(graph, dy))
+	if (check_move_y(graph, player, dy))
 	{
-		graph->y += dy;
+		player->py += dy;
 		moved = 1;
 	}
 	return (moved);
 }
 
-int	move_right(t_graph *graph)
+int	move_right(t_graph *graph, t_player *player)
 {
 	double	dx;
 	double	dy;
 	int		moved;
 
-	if (!graph->is_moving_right)
+	if (!player->is_moving_right)
 		return (0);
-	dx = -graph->dirY * graph->move_speed;
-	dy = graph->dirX * graph->move_speed;
+	dx = -player->dirY * player->move_speed;
+	dy = player->dirX * player->move_speed;
 	moved = 0;
-	if (check_move_x(graph, dx))
+	if (check_move_x(graph, player, dx))
 	{
-		graph->x += dx;
+		player->px += dx;
 		moved = 1;
 	}
-	if (check_move_y(graph, dy))
+	if (check_move_y(graph, player, dy))
 	{
-		graph->y += dy;
+		player->py += dy;
 		moved = 1;
 	}
 	return (moved);
 }
 
-int	handle_movement(t_graph *graph)
+int	handle_movement(t_graph *graph, t_player *player)
 {
 	int moved;
 
 	moved = 0;
-	moved += move_forward(graph);
-	moved += move_backward(graph);
-	moved += move_left(graph);
-	moved += move_right(graph);
+	moved += move_forward(graph, player);
+	moved += move_backward(graph, player);
+	moved += move_left(graph, player);
+	moved += move_right(graph, player);
 	return (moved > 0);
 }

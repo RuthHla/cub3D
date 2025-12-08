@@ -1,169 +1,160 @@
-
-
 #include "cub3d.h"
 
-#include <math.h> // Nécessaire pour sin, cos, tan, PI
-
-#define PI 3.1415926535
-#define P2 PI / 2
-#define P3 3*PI / 2
-#define DR 0.0274533
-
-float	dist(float ax, float ay, float bx, float by)
+// initialisation du rayon pour un angle donné
+void init_ray(t_ray *ray, t_player *player, float ra)
 {
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay))); // formule de la norme d'un vecteur
+	ray->ra = ra;
+	ray->distH = 1000000;
+	ray->hx = player->px;
+	ray->hy = player->py;
+	ray->distV = 1000000;
+	ray->vx = player->px;
+	ray->vy = player->py;
 }
 
-void	draw_rays(t_graph *graph)
+// calcul des intersections horizontales et verticales
+void cast_single_ray(t_graph *graph, t_player *player, t_ray *ray)
 {
-	int	r; // Index Ray -> donne le nombre de rayons émis par le joueur
-	int mx; // coordonnée x dans la grille
-	int my; // coordonnée y dans la grille
-//	int mp; // position dans le tableau 1D (inutile dans notre cas?)
-	int dof; // depth of field -> empêche le rayon de traverser toute la carte, compte le nombre de murs/cases vérifiées
-	float rx; // coordonnée x du point d'impact du rayon dans le canvas
-	float ry; // coordonnée y du point d'impact du rayon dans le canvas
-	float ra; // angle du rayon
-	float xo; // offset utilisé pour passer d'une ligne de la carte à la suivante
-	float yo; // offset
-	float aTan; // tangente négative inversée utilisé pour calculer les intersections horizontales
-	float nTan; // pour calculer les intersections verticales
-	float disH;
-	float disV;
-//	float disT;
-	float hx;
-	float hy;
-	float vx;
-	float vy;
+	init_horizontal_ray(ray, player);
+	hit_h_wall(ray, graph, player);
+	init_vertical_ray(ray, player);
+	hit_v_wall(ray, graph, player);
+}
 
-	ra = graph->pa - DR * 30;
-	if (ra < 0)
-		ra += 2 * PI;
-	if (ra > 2 * PI)
-		ra -= 2 * PI;
-	for (r = 0; r < 60; r++) // boucle pour lancer les rayons
+/*
+Le raycasting se fait en deux temps et récupère deux distances : la surface horizontale
+touchée par le rayon et la surface verticale
+Cette fonction détermine le point d'impact le plus proche parmi les deux surfaces
+*/
+void	get_ray_impact(t_player *player, t_ray *ray, float *dist, int *color)
+{
+	float	ca;
+	if (ray->distH < ray->distV)
 	{
-		disH = 1000000;
-		hx = graph->x;
-		hy = graph->y;
-		// --- CHECK LIGNES HORIZONTALES ---
-		dof = 0; // on réinitialise à 0 à chaque boucle (aucun mur ou case vérifiés)
-		if (ra == P2 || ra == P3)
-			dof = 15;
-		else
-			aTan = -1 / tan(ra);
-		if (ra > PI) // le rayon est orienté vers le bas
-		{
-			ry = (((int)graph->y / IMG_PX) * IMG_PX) - 0.0001;
-			// (int)graph->y / IMG_PX -> donne la coordonnée y dans la grille
-			// on remultiplie par IMG_PX pour avoir la bonne coordonnée dans le canvas
-			// puis on soustrait pour avoir la liste juste au dessus
-			rx = (graph->y - ry) * aTan + graph->x;
-			// graph->y - ry donne la hauteur du triangle formé par le joueur et le point (rx, ry) = distance verticale parcourue par le rayon
-			// en multipliant par aTan on obtient la distance horizontale parcourue (= côté adjacent du triangle)
-			// on ajoute la position de départ du joueur pour la position du triangle et donc la position de rx
-			yo = -IMG_PX; // si le rayon descend, l'offset est négatif
-			xo = -yo * aTan;
-		}
-		if (ra < PI) // le rayon est orienté vers le haut
-		{
-			ry = (((int)graph->y / IMG_PX) * IMG_PX) + IMG_PX; // pour avoir la coordonnée de la ligne horizontale supérieure (+ IMG_PX ou +0.0001?)
-			rx = (graph->y - ry) * aTan + graph->x;
-			yo = IMG_PX;
-			xo = -yo * aTan;
-		}
-		while (dof < 15)
-		{
-			mx = (int)rx / IMG_PX; // coordonnées du rayon dans la grille
-			my = (int)ry / IMG_PX;
-			if (mx < 0 || my < 0 || mx >= 30 || my >= 16)
-				break;
-			if (mx >= 0 && my >= 0 && mx < 30 && my < 16 && graph->map[my][mx] == '1')
-			{
-				hx = rx;
-				hy = ry;
-				disH = dist(graph->x, graph->y, hx, hy);
-				dof = 15; // on arrête la boucle (break plutôt?)
-			}
-			else
-			{
-				// l'angle ra ne change pas donc il y a juste a ajouter l'offset pour vérifier la ligne suivante
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
-		}
-		// --- CHECK LIGNES VERTICALES ---
-		disV = 1000000;
-		vx = graph->x;
-		vy = graph->y;
-		dof = 0;
-		nTan = -tan(ra);
-		if (ra > P2 && ra < P3) // le rayon est orienté vers la droite
-		{
-			rx = (((int)graph->x / IMG_PX) * IMG_PX) - 0.0001;
-			ry = (graph->x - rx) * nTan + graph->y;
-			xo = -IMG_PX; // si le rayon descend, l'offset est négatif
-			yo = -xo * nTan;
-		}
-		else if (ra < P2 || ra > P3) // le rayon est orienté vers la gauche
-		{
-			rx = (((int)graph->x / IMG_PX) * IMG_PX) + IMG_PX; // pour avoir la coordonnée de la ligne horizontale supérieure (+ IMG_PX ou +0.0001?)
-			ry = (graph->x - rx) * nTan + graph->y;
-			xo = IMG_PX;
-			yo = -xo * nTan;
-		}
-		else if (ra == P2 || ra == P3) // le rayon est orienté vers la gauche ou la droite (parallèle aux abscisses), évite les divisions par 0
-		{
-			rx = graph->x;
-			ry = graph->y;
-			dof = 15;
-		}
-		else if (ra == 0 || ra == PI) // le rayon est orienté vers la gauche ou la droite (parallèle aux abscisses), évite les divisions par 0
-		{
-			rx = graph->x;
-			ry = graph->y;
-			dof = 15;
-		}
-		while (dof < 15)
-		{
-			mx = (int)rx / IMG_PX; // coordonnées du rayon dans la grille
-			my = (int)ry / IMG_PX;
-			if (mx < 0 || my < 0 || mx >= 30 || my >= 16)
-				break;
-			if (mx >= 0 && my >= 0 && mx < 30 && my < 16 && graph->map[my][mx] == '1')
-			{
-				vx = rx;
-				vy = ry;
-				disV = dist(graph->x, graph->y, vx, vy);
-				dof = 15; // on arrête la boucle (break plutôt?)
-			}
-			else
-			{
-				// l'angle ra ne change pas donc il y a juste a ajouter l'offset pour vérifier la ligne suivante
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
-		}
-		if (disH < disV)
-		{
-			rx = hx;
-			ry = hy;
-//			disT = disH;
-		}
-		if (disV < disH)
-		{
-			rx = vx;
-			ry = vy;
-//			disT = disV;
-		}
-		draw_line(graph->mlx, graph->win, graph->x, graph->y, rx, ry, 0xFF0000);
+		*dist = ray->distH;
+		*color = 0xB03119;
+	}
+	else
+	{
+		*dist = ray->distV;
+		*color = 0xFF2900;
+	}
+	ca = normalise_angle(player->pa - ray->ra);
+	*dist *= cos(ca); // correction fish-eye
+}
+/*
+Fonction pour dessiner l'environnement colonne par colonne
+dans img.
 
-		ra += DR;
-		if (ra < 0)
-			ra += 2 * PI;
-		if (ra > 2 * PI)
-			ra -= 2 * PI;
+-r correspond à l'indice du rayon ou indice de la colonne de pixels à
+dessiner à l'écran
+-dist correspond à la distance calculée lors du raycasting et corrigée
+du fish eye
+-lineH : hauteur en pixel du mur à dessiner à l'écran. Plus il est loin
+plus lineH est petit
+-y_start : pixel à partir duquel on commence à dessiner le mur (en partant du
+haut du canvas mlx) -> HEIGHT / 2 = moitié du canvas on soustrait lineH / 2
+donc le mur occupera autant de pixels en dessous et au dessus du milieu du canvas
+(il est centré)
+-y_end : fin du dessin du mur
+
+3 boucles pour mettre dans img les pixels :
+-du plafond d'abord donc de 0 au haut du mur
+-du mur entre y_start et y_end
+-du sol entre y_end et le bas du canvas (donc HEIGHT)
+ */
+void draw_ray_column(t_graph *graph, int r, float dist, int color)
+{
+	float	lineH;
+	float	y_start;
+	float	y_end;
+	int		y;
+	int		x_colonne = r;
+
+	lineH = (IMG_PX * HEIGHT) / dist;
+	y_start = (HEIGHT / 2.0f) - (lineH / 2.0f);
+	y_end   = y_start + lineH;
+	y = 0;
+	while (y < y_start)
+	{
+		ft_pixel_put(&graph->img, x_colonne, y, 0x27D3F5);
+		y++;
+	}
+	while (y < y_end)
+	{
+		ft_pixel_put(&graph->img, x_colonne, y, color);
+		y++;
+	}
+	while (y < HEIGHT)
+	{
+		ft_pixel_put(&graph->img, x_colonne, y, 0x8A6737);
+		y++;
 	}
 }
+
+
+void cast_ray(t_graph *graph, t_player *player, float pa)
+{
+	t_ray	ray;
+	float	ra;
+	float	dist;
+	int		color;
+	float	angle_step;
+
+	angle_step = FOV / WIDTH;
+	for (int r = 0; r < WIDTH; r++)
+	{
+		ra = pa - (FOV / 2.0f) + (r * angle_step);
+		ra = normalise_angle(ra);
+		init_ray(&ray, player, ra);
+		cast_single_ray(graph, player, &ray);
+		get_ray_impact(player, &ray, &dist, &color);
+		draw_ray_column(graph, r, dist, color);
+	}
+}
+/*
+// Dessine les rayons sur la minimap
+void draw_rays_minimap(t_graph *graph)
+{
+	t_ray ray;
+	float ra;
+	int r;
+	int color;
+
+	// Angle de départ pour le premier rayon
+	ra = graph->player->pa - DR * 30;
+	ra = normalise_angle(ra);
+	r = 0;
+	while (r < 60)
+	{
+		init_ray(&ray, graph->player, ra);
+		cast_single_ray(graph, graph->player, &ray);
+
+		// On choisit le point d'impact le plus proche
+		if (ray.distH < ray.distV)
+		{
+			color = 0x00FF00; // vert pour impact horizontal
+			draw_line(graph->mlx, graph->win,
+					graph->player->px,
+					graph->player->py,
+					ray.hx,
+					ray.hy,
+					color);
+		}
+		else
+		{
+			color = 0x0000FF; // bleu pour impact vertical
+			draw_line(graph->mlx, graph->win,
+					graph->player->px,
+					graph->player->py,
+					ray.vx,
+					ray.vy,
+					color);
+		}
+		// Passe au rayon suivant
+		ra += DR;
+		ra = normalise_angle(ra);
+		r++;
+	}
+} */
+
