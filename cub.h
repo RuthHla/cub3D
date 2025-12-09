@@ -1,13 +1,15 @@
 #ifndef CUB_H
 #define CUB_H
 
-#include "../minilibx_macos/mlx.h"
+// #include "../minilibx_macos/mlx.h"
+#include "../minilibx-linux/mlx.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
+
 
 typedef struct s_data
 {
@@ -20,6 +22,8 @@ typedef struct s_data
     char    **map;
     int     map_w;
     int     map_h;
+    int     player_x;
+    int     player_y;
 }   t_data;
 
 // init/init.c
@@ -44,6 +48,7 @@ int parse_header_line(char *line, t_data *data);
 int save_map(char *path_map, t_data *data);
 
 // parsing/parse_map.c
+int	valid_map(t_data *data);
 
 // parsing/parse_textures.c
 int parse_texture(char *line, char **texture);

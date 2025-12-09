@@ -20,11 +20,12 @@ echo
 SRC="
 main_test.c
 parse_arg.c
-parse_header.c
+save_map.c
 parse_colors.c
 parse_textures.c
 utils.c
 ../init/init.c
+../init/build_map.c
 "
 
 OUT="parser_tester"
@@ -51,19 +52,26 @@ MAPS=(
     "../map/bad/color_none.cub"
     "../map/bad/empty.cub"
     "../map/bad/file_letter_end.cub"
-    # "../map/bad/"
-    # "../map/bad/"
-    # "../map/bad/"
-    # "../map/bad/"
-    # "../map/bad/"
-    # "../map/bad/"
-
-
-    # Ajoute toutes les maps de test que tu veux ici
+    "../map/bad/filetype_missing"
+    "../map/bad/filetype_wrong.buc"
+    "../map/bad/no_permission.cub"
+    "../map/bad/textures_dir.cub"
+    "../map/bad/textures_duplicates.cub"
+    "../map/bad/textures_forbidden.cub"
+    "../map/bad/textures_invalid.cub"
+    "../map/bad/textures_missing.cub"
+    "../map/bad/textures_none.cub"
+    "../map/bad/textures_not_xpm.cub"
 )
 
+# === 4) Lancement des tests ===
 # === 4) Lancement des tests ===
 echo "Running tests..."
 echo
 
-./"$OUT" "${MAPS[@]}"
+#important de boucler les executions sinon pb avec le buf static/fd de gnl
+for map in "${MAPS[@]}"; do
+    ./"$OUT" "$map"
+    echo
+done
+

@@ -306,15 +306,26 @@ void	update_direction(void)
 int	key_press(int key, void *param)
 {
 	(void)param;
-	if (key == 53) // ESC
+	// if (key == 53) // ESC
+	// 	exit(0);
+	// if (key == 13)    // W
+	// 	key_w = 1;
+	// if (key == 1)     // S
+	// 	key_s = 1;
+	// if (key == 0)     // A
+	// 	key_a = 1;
+	// if (key == 2)     // D
+	// 	key_d = 1;
+
+	if (key == 65307) // ESC
 		exit(0);
-	if (key == 13)    // W
+	if (key == 119) 
 		key_w = 1;
-	if (key == 1)     // S
+	if (key == 115) 
 		key_s = 1;
-	if (key == 0)     // A
+	if (key == 97)    
 		key_a = 1;
-	if (key == 2)     // D
+	if (key == 100)    
 		key_d = 1;
 	return (0);
 }
@@ -322,14 +333,23 @@ int	key_press(int key, void *param)
 int	key_release(int key, void *param)
 {
 	(void)param;
-	if (key == 13)    // W
+	// if (key == 13)   
+	// 	key_w = 0;
+	// if (key == 1)     
+	// 	key_s = 0;
+	// if (key == 0)     
+	// 	key_a = 0;
+	// if (key == 2)    
+		// key_d = 0;
+	if (key == 119) 
 		key_w = 0;
-	if (key == 1)     // S
+	if (key == 115) 
 		key_s = 0;
-	if (key == 0)     // A
+	if (key == 97)    
 		key_a = 0;
-	if (key == 2)     // D
+	if (key == 100)    
 		key_d = 0;
+
 	return (0);
 }
 
@@ -394,6 +414,30 @@ void	load_texture(t_tex *tex, char *path)
 			&tex->bpp, &tex->line_len, &tex->endian);
 }
 
+int check_arg(char *av)
+{
+    int fd = 0;
+    size_t len;
+
+    if(!av)
+        return (printf("Error\nMissing map file argument\n"), 0);
+    
+    len = ft_strlen(av);
+
+    if(len < 5) // pcq au moins 1 lettre + .cub
+        return (printf("Error\nInvalid file name, expected atleast-> n.cub\n"), 0);
+    
+    if(av[len - 1] != 'b' || av[len - 2] != 'u' || av[len - 3] != 'c' || av[len - 4] != '.')
+        return(printf("Error\nInvalid extension file name, expected -> .cub\n"), 0);
+
+    fd = open(av, O_RDONLY);
+    if( fd == -1)
+        return(printf("Error\nCannot open file\n"), 0);
+
+    close(fd);
+    return 1;
+}
+
 int	main(int ac, char **av)
 {
 	if (ac != 2)
@@ -402,20 +446,13 @@ int	main(int ac, char **av)
 		return 1;
 	}
 	if (!check_arg(av[1]))
+	{
+		printf("✅ check_arg success for %s\n\n", av[1]);
 		return 1;
-
-	t_data *data = NULL;
-	init_data(data);
-	if(!save_map(av[1], data))
-		return 1;
-
-	//init_data();
-	
-	//init_map(char **map)
-	//check_map(t_data *data)
-
-	//fichier vide + check texture
-	// if(!check_map(av[1], ))
+	}
+	init_data(&data);
+	if(!save_map(av[i], &data))
+		free_data(&data;)
 
 	mlx = mlx_init();
 	if (!mlx)

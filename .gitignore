@@ -10,9 +10,16 @@ cub3D
 # minilibx
 minilibx_macos/*.o
 minilibx_macos/*.a
+minilibx-linux/*.o
+minilibx-linux/*.a
+minilibx-linux
+
 
 # fichiers macOS
 .DS_Store
 
 # sujet
 cub3d.subject.pdf
+
+#map
+map/bad/no_permission.cub

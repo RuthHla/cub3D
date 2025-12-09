@@ -11,4 +11,6 @@ void init_data(t_data *data)
     data->map = NULL;
     data->map_w = 0;
     data->map_h = 0;
+    data->player_x = 0;
+    data->player_y = 0;
 }

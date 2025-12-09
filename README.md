@@ -28,22 +28,22 @@ Lundi 8 : Parsing (Arthur) + Exec (Simon)
     - script pour tester les map defectueuses
     - script global testant les 2 types (map defectueuse ou parsing textures etc..)
 Mardi 9 : Mettre à la norme + Premier test serieux du projet
-Merc. 10 : 
+Merc. 10 : Merge et tester les parties par rapport au sujet 
 Jeudi 11 : 
 Vend. 12 :
 Sam . 13 :
 Dim . 14 :
 
 - finir parse_colors OK
+- parser la map -> OK
+->script pour montrer good map OK et bad map KO
+->refacto parse_map ?
 
-- faire le script de test sur les maps concernees
-
-- puis refactoriser -> save_map, build_map_from_list, parse_header_line
-
-- parser la map -> KO
+-Screen video de lecran pour montrer avance au mate
 
 - creation d'une grosse fonction free -> KO
 
 - Trouver sujet de correction cub3d
 
 - Funcheck sur gnl et libft
+-> check fonction interdite (gnl)
