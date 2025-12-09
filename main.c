@@ -405,6 +405,7 @@ int	main(int ac, char **av)
 		return 1;
 
 	t_data *data = NULL;
+	init_data(data);
 	if(!save_map(av[1], data))
 		return 1;
 

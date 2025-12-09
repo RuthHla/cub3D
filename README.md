@@ -21,14 +21,29 @@ Sam . 6 : Parsing (Arthur) + Exec (Simon)
     -   telecharger des maps de test
 
 Dim . 7 : Parsing (Arthur) + Exec (Simon)
-    - comprehension de put_pixel 0%
     - implementer la sauvegarde de la map 75% (corriger la facon de "parser" les colors/textures et la map)
-    - checker la validite de la map 0%
-    - script pour tester toutes les mauvaises map (pas possible avec les bonnes ?)
+    - script test parsing sur les map default textures, couleurs, nom extension  
 Lundi 8 : Parsing (Arthur) + Exec (Simon)
+    - implementer le check de la map enregistre
+    - script pour tester les map defectueuses
+    - script global testant les 2 types (map defectueuse ou parsing textures etc..)
 Mardi 9 : Mettre à la norme + Premier test serieux du projet
 Merc. 10 : 
 Jeudi 11 : 
 Vend. 12 :
 Sam . 13 :
 Dim . 14 :
+
+- finir parse_colors OK
+
+- faire le script de test sur les maps concernees
+
+- puis refactoriser -> save_map, build_map_from_list, parse_header_line
+
+- parser la map -> KO
+
+- creation d'une grosse fonction free -> KO
+
+- Trouver sujet de correction cub3d
+
+- Funcheck sur gnl et libft

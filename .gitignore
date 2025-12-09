@@ -1,15 +1,18 @@
-# objets compilés
+# objets
 *.o
 *.a
 *.out
 
-# exécutables
+# exec
 minimap
 cub3D
 
-# minilibx compilée
+# minilibx
 minilibx_macos/*.o
 minilibx_macos/*.a
 
 # fichiers macOS
 .DS_Store
+
+# sujet
+cub3d.subject.pdf

@@ -2,7 +2,7 @@ NAME = minimap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c parse.c
+SRC = main.c parsing/parse.c init/init.c
 # SRC = minimap.c
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 

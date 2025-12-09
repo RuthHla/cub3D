@@ -1,0 +1,28 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     parser_tester
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000E5C, symSize: 0x284 }
+  - { offset: 0x41, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000E5C, symSize: 0x284 }
+  - { offset: 0xA1, size: 0x8, addend: 0x0, symName: _free_data, symObjAddr: 0x284, symBinAddr: 0x1000010E0, symSize: 0x178 }
+  - { offset: 0x18F, size: 0x8, addend: 0x0, symName: _check_arg, symObjAddr: 0x0, symBinAddr: 0x100001258, symSize: 0x160 }
+  - { offset: 0x1AA, size: 0x8, addend: 0x0, symName: _check_arg, symObjAddr: 0x0, symBinAddr: 0x100001258, symSize: 0x160 }
+  - { offset: 0x23D, size: 0x8, addend: 0x0, symName: _parse_header_line, symObjAddr: 0x0, symBinAddr: 0x1000013B8, symSize: 0x344 }
+  - { offset: 0x260, size: 0x8, addend: 0x0, symName: _parse_header_line, symObjAddr: 0x0, symBinAddr: 0x1000013B8, symSize: 0x344 }
+  - { offset: 0x2A4, size: 0x8, addend: 0x0, symName: _save_map, symObjAddr: 0x344, symBinAddr: 0x1000016FC, symSize: 0x32C }
+  - { offset: 0x404, size: 0x8, addend: 0x0, symName: _free_split, symObjAddr: 0x0, symBinAddr: 0x100001A28, symSize: 0x88 }
+  - { offset: 0x426, size: 0x8, addend: 0x0, symName: _free_split, symObjAddr: 0x0, symBinAddr: 0x100001A28, symSize: 0x88 }
+  - { offset: 0x458, size: 0x8, addend: 0x0, symName: _parse_color, symObjAddr: 0x88, symBinAddr: 0x100001AB0, symSize: 0x36C }
+  - { offset: 0x538, size: 0x8, addend: 0x0, symName: _parse_texture, symObjAddr: 0x0, symBinAddr: 0x100001E1C, symSize: 0xD8 }
+  - { offset: 0x553, size: 0x8, addend: 0x0, symName: _parse_texture, symObjAddr: 0x0, symBinAddr: 0x100001E1C, symSize: 0xD8 }
+  - { offset: 0x5CE, size: 0x8, addend: 0x0, symName: _print_error, symObjAddr: 0x0, symBinAddr: 0x100001EF4, symSize: 0x40 }
+  - { offset: 0x5F5, size: 0x8, addend: 0x0, symName: _print_error, symObjAddr: 0x0, symBinAddr: 0x100001EF4, symSize: 0x40 }
+  - { offset: 0x61D, size: 0x8, addend: 0x0, symName: _free_map_list, symObjAddr: 0x40, symBinAddr: 0x100001F34, symSize: 0x60 }
+  - { offset: 0x64F, size: 0x8, addend: 0x0, symName: _is_empty_line, symObjAddr: 0xA0, symBinAddr: 0x100001F94, symSize: 0xE8 }
+  - { offset: 0x685, size: 0x8, addend: 0x0, symName: _is_map_line, symObjAddr: 0x188, symBinAddr: 0x10000207C, symSize: 0x1D4 }
+  - { offset: 0x6BB, size: 0x8, addend: 0x0, symName: _is_space, symObjAddr: 0x35C, symBinAddr: 0x100002250, symSize: 0x5C }
+  - { offset: 0x6E3, size: 0x8, addend: 0x0, symName: _build_map_from_list, symObjAddr: 0x3B8, symBinAddr: 0x1000022AC, symSize: 0x270 }
+  - { offset: 0x75F, size: 0x8, addend: 0x0, symName: _line_len, symObjAddr: 0x628, symBinAddr: 0x10000251C, symSize: 0xA0 }
+  - { offset: 0x8A3, size: 0x8, addend: 0x0, symName: _init_data, symObjAddr: 0x0, symBinAddr: 0x1000025BC, symSize: 0x5C }
+  - { offset: 0x8B0, size: 0x8, addend: 0x0, symName: _init_data, symObjAddr: 0x0, symBinAddr: 0x1000025BC, symSize: 0x5C }
+...
