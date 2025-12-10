@@ -6,7 +6,7 @@
 /*   By: alandel <alandel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:10:31 by alandel           #+#    #+#             */
-/*   Updated: 2025/12/09 17:13:05 by alandel          ###   ########.fr       */
+/*   Updated: 2025/12/10 10:27:56 by alandel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 {
 	int		i;
 	t_data	data;
-	// int		ret;
+	int		ret;
 
 	if (ac < 2)
 	{
@@ -64,23 +64,27 @@ int	main(int ac, char **av)
 			i++;
 			continue ;
 		}
-		// ret = save_map(av[i], &data);
-		// if (ret == 0)
-		// {
-		// 	printf("✅ Parsing header OK pour %s\n", av[i]);
-			// printf("  NO: %s\n", data.tex_no);
-			// printf("  SO: %s\n", data.tex_so);
-			// printf("  WE: %s\n", data.tex_we);
-			// printf("  EA: %s\n", data.tex_ea);
-			// printf("  Floor color: %d\n", data.floor_color);
-			// printf("  Ceil  color: %d\n", data.ceil_color);
-			// printf("  Map size: %d x %d\n", data.map_h, data.map_w);
-		// }
-		// else
-		// {
-		// 	printf("❌ Parsing header FAILED pour %s (save_map returned %d)\n", av[i],
-		// 		ret);
-		// }
+		ret = save_map(av[i], &data);
+		// if(!save_map(av[i], &data))
+		// 	return(printf("Error BEFORE check map\n"), 1);
+		if (ret == 0)
+		{
+			printf("✅ Parsing header OK pour %s\n", av[i]);
+			return (1);
+		// 	printf("  NO: %s\n", data.tex_no);
+		// 	printf("  SO: %s\n", data.tex_so);
+		// 	printf("  WE: %s\n", data.tex_we);
+		// 	printf("  EA: %s\n", data.tex_ea);
+		// 	printf("  Floor color: %d\n", data.floor_color);
+		// 	printf("  Ceil  color: %d\n", data.ceil_color);
+		// 	printf("  Map size: %d x %d\n", data.map_h, data.map_w);
+		}
+		else
+		{
+			printf("❌ Parsing header FAILED pour %s (save_map returned %d)\n", av[i],
+				ret);
+				return 1;
+		}
 		if(!valid_map(&data))
 			printf("✅ Parsing map OK pour %s\n", av[i]);
 		else 

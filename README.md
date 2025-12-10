@@ -34,16 +34,12 @@ Vend. 12 :
 Sam . 13 :
 Dim . 14 :
 
-- finir parse_colors OK
+- finir parse header (color & texture) -> OK
 - parser la map -> OK
+- Fonction free + check avant utilisation d'un pointeur + Harmoniser les retours -> KO
 ->script pour montrer good map OK et bad map KO
-->refacto parse_map ?
-
--Screen video de lecran pour montrer avance au mate
-
-- creation d'une grosse fonction free -> KO
-
-- Trouver sujet de correction cub3d
-
-- Funcheck sur gnl et libft
--> check fonction interdite (gnl)
+- reprendre trigo -> KO
+- mettre parfaitement a la norme -> KO
+- Trouver sujet de correction cub3d -> KO
+- Funcheck sur gnl et libft -> KO
+- check fonction interdite -> KO

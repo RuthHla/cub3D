@@ -58,8 +58,9 @@ MAPS=(
     "../map/bad/wall_hole_north.cub"
     "../map/bad/wall_hole_south.cub"
     "../map/bad/wall_hole_west.cub"
-    "../map/bad/wall_hole_none.cub"
+    "../map/bad/wall_none.cub"
     "../map/good/creepy.cub"
+    "../map/good/glue.cub"
 )
 
 # === 4) Lancement des tests ===

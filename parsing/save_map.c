@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alandel <alandel@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/10 10:35:02 by alandel           #+#    #+#             */
+/*   Updated: 2025/12/10 10:45:49 by alandel          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
 
 int	is_header_line(char *line)
@@ -54,7 +66,7 @@ static int	init_header(char *line, t_list **map_lines, t_data *data,
 		if (!parse_header_line(line, data))
 		{
 			free(line);
-			print_error("Error\nErreur dans header\n");
+			print_error("Error\n1Erreur dans header\n");
 			return (0);
 		}
 		free(line);
@@ -67,7 +79,7 @@ static int	init_header(char *line, t_list **map_lines, t_data *data,
 		return (1);
 	}
 	free(line);
-	print_error("Error\nErreur dans header\n");
+	print_error("Error\n2Erreur dans header\n");
 	return (0);
 }
 
