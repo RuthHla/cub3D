@@ -6,7 +6,7 @@ CFLAGS="-Wall -Wextra -Werror -g"
 
 # Chemins vers les libs comme dans ton Makefile
 LIBFT_DIR="../libft"
-CUB_DIR="."   # à adapter si ta lib cub est dans un sous-dossier
+CUB_DIR="."  
 
 # === 1) Build des bibliothèques ===
 

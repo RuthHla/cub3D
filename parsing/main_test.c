@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 {
 	int		i;
 	t_data	data;
-	int		ret;
+	// int		ret;
 
 	if (ac < 2)
 	{
@@ -64,7 +64,7 @@ int	main(int ac, char **av)
 			i++;
 			continue ;
 		}
-		ret = save_map(av[i], &data);
+		// ret = save_map(av[i], &data);
 		// if (ret == 0)
 		// {
 		// 	printf("✅ Parsing header OK pour %s\n", av[i]);

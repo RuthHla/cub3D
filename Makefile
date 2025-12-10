@@ -6,15 +6,15 @@ SRC = main.c
 # SRC = minimap.c
 OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
-# MLX_DIR = ./minilibx_macos
-MLX_DIR = ./minilibx-linux
+MLX_DIR = ./minilibx_macos
+# MLX_DIR = ./minilibx-linux
 LIBFT_DIR = ./libft
 
 # linux = 	MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lm -lXext -lX11
 # macos =	MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
-MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lm -lXext -lX11
-# MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+# MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -lm -lXext -lX11
+MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 LIBFT_FLAGS = -I$(LIBFT_DIR) -L$(LIBFT_DIR) -lft
 
 

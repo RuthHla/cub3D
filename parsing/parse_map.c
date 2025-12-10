@@ -31,7 +31,7 @@ int	normalize_map(t_data *data)
 			if (j < len)
 				rect[i][j] = data->map[i][j];
 			else
-				rect[i][j] = ' '; // padding avec des espaces
+				rect[i][j] = ' ';
 			j++;
 		}
 		rect[i][j] = '\0';
@@ -68,7 +68,7 @@ int	parse_player_and_chars(t_data *data)
 				data->player_x = j + 0.5;
 				data->player_y = i + 0.5;
 				// set_player_dir_from_char(data, c);
-				data->map[i][j] = '0'; // case walkable
+				data->map[i][j] = '0'; // case walkable ou conserver lettre ?
 			}
 			else if (c != '0' && c != '1' && c != ' ')
 				return (print_error("Error\nInvalid char in map\n"), 0);

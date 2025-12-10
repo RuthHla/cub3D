@@ -1,8 +1,8 @@
 #ifndef CUB_H
 #define CUB_H
 
-// #include "../minilibx_macos/mlx.h"
-#include "../minilibx-linux/mlx.h"
+#include "../minilibx_macos/mlx.h"
+// #include "../minilibx-linux/mlx.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <math.h>
